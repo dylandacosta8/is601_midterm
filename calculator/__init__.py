@@ -1,6 +1,7 @@
 from typing import List
 from decimal import Decimal
 import logging
+import pandas as pd
 
 logger = logging.getLogger('calculator_app')
 
@@ -21,37 +22,30 @@ class Calculation:
         return self.result
 
 class Calculator:
-    history: List[Calculation] = []
+    def __init__(self):
+        # Initialize a DataFrame to hold history
+        self.history = pd.DataFrame(columns=["operation", "operands", "result"])
 
-    def __init__(self) -> None:
-        pass
+    def add_to_history(self, operation: str, operands: list, result: Decimal) -> None:
+        """Add a calculation to the history."""
+        self.history = self.history.append({"operation": operation, "operands": operands, "result": result}, ignore_index=True)
 
-    def _add_to_history(self, operation: str, operands: List[Decimal], result: Decimal) -> None:
-        calc = Calculation(operation, operands, result)
-        Calculator.history.append(calc)
-        logger.info(f"Added to history: {operation} with result {result}")
+    def save_history(self, filename: str) -> None:
+        """Save history to a CSV file."""
+        self.history.to_csv(filename, index=False)
 
-    @classmethod
-    def get_history(cls) -> List[Calculation]:
-        logger.debug(f"Fetching history: {cls.history}")
-        return cls.history
+    def load_history(self, filename: str) -> None:
+        """Load history from a CSV file."""
+        try:
+            self.history = pd.read_csv(filename)
+        except FileNotFoundError:
+            print(f"No such file: {filename}")
 
-    @classmethod
-    def clear_history(cls) -> None:
-        logger.info("Clearing history.")
-        cls.history.clear()
+    def clear_history(self) -> None:
+        """Clear the calculation history."""
+        self.history = pd.DataFrame(columns=["operation", "operands", "result"])
 
-    @classmethod
-    def get_last_calculation(cls) -> Calculation:
-        if cls.history:
-            logger.debug("Retrieving last calculation.")
-            return cls.history[-1]
-        else:
-            logger.warning("No calculations in history.")
-            raise IndexError("No calculations in history.")
-
-    @classmethod
-    def get_calculations_by_type(cls, operation: str) -> List[Calculation]:
-        filtered_calculations = [calc for calc in cls.history if calc.operation == operation]
-        logger.debug(f"Filtered calculations by type '{operation}': {filtered_calculations}")
-        return filtered_calculations
+    def delete_last_calculation(self) -> None:
+        """Delete the last calculation from history."""
+        if not self.history.empty:
+            self.history = self.history[:-1]
