@@ -13,19 +13,28 @@ class Calculator:
     def add_to_history(self, operation: str, operands: list, result: Decimal) -> None:
         """Add a calculation to the history."""
         new_entry = pd.DataFrame({"operation": [operation], "operands": [operands], "result": [result]})
-        self.history = pd.concat([self.history, new_entry], ignore_index=True)
+        print(new_entry)
+        self.history = pd.concat([ new_entry, self.history], ignore_index=True)
+        print(self.history)
         logger.info(f"Added to history: {operation} with operands {operands} = {result}")
 
     def save_history(self, filename: str) -> None:
         """Save history to a CSV file."""
-        self.history.to_csv(filename, index=False)
-        logger.info(f"History saved to {filename}")
+        if not self.history.empty:
+            self.history.to_csv(filename, index=False)
+            logger.info(f"History saved to {filename}")
+        else:
+            logger.warning("Attempted to save empty history.")
 
     def load_history(self, filename: str) -> None:
         """Load history from a CSV file."""
         try:
-            self.history = pd.read_csv(filename)
-            logger.info(f"History loaded from {filename}")
+            loaded_history = pd.read_csv(filename)
+            if {'operation', 'operands', 'result'}.issubset(loaded_history.columns):
+                self.history = loaded_history
+                logger.info(f"History loaded from {filename}")
+            else:
+                logger.error(f"Invalid history file format: {filename}")
         except FileNotFoundError:
             logger.error(f"No such file: {filename}")
 
