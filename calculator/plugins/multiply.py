@@ -1,22 +1,20 @@
+from calculator import Calculator
 from decimal import Decimal
-from calculator import Calculator, Calculation
-from . import Command
+import logging
 
-class MultiplyCommand(Command):
-    def execute(self, a: Decimal, b: Decimal) -> Decimal:
-        self._validate_inputs(a, b)
-        result = a * b
-        
-        # Create and store the Calculation instance
-        calculation = Calculation("multiply", [a, b], result)
-        Calculator.history.append(calculation)
+logger = logging.getLogger('calculator_app')
 
+class MultiplyCommand:
+    def __init__(self, calculator: Calculator):
+        self.calculator = calculator
+
+    def execute(self, operand1: Decimal, operand2: Decimal) -> Decimal:
+        """Execute the multiplication operation and record it in history."""
+        result = operand1 * operand2
+        self.calculator.add_to_history("multiply", [operand1, operand2], result)
+        logger.info(f"Executed Multiply: {operand1} * {operand2} = {result}")
         return result
 
     def help(self) -> str:
+        """Provide help for the Multiply command."""
         return "Usage: multiply <value1> <value2> - Multiplies two numbers."
-
-    @staticmethod
-    def _validate_inputs(a, b) -> None:
-        if not isinstance(a, (int, float, Decimal)) or not isinstance(b, (int, float, Decimal)):
-            raise ValueError("Operands must be numeric.")
