@@ -3,18 +3,8 @@ import importlib
 import pkgutil
 import os
 import logging
-from abc import ABC, abstractmethod
 
 logger = logging.getLogger('calculator_app')
-
-class Command(ABC):
-    @abstractmethod
-    def execute(self, a=None, b=None):  # Adjusted to accept optional parameters for history commands
-        pass
-
-    @abstractmethod
-    def help(self):
-        pass
 
 class PluginManager:
     def __init__(self):
