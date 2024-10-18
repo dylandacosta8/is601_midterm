@@ -2,6 +2,7 @@ import os
 import logging
 import concurrent.futures
 from calculator.plugins import PluginManager
+from calculator import Calculator
 from decimal import Decimal
 from dotenv import load_dotenv
 
@@ -29,7 +30,8 @@ else:  # 'prod'
 # REPL function
 def repl():
     # Initialize the PluginManager and load plugins
-    plugin_manager = PluginManager()
+    calculator = Calculator()
+    plugin_manager = PluginManager(calculator)
     plugin_manager.load_plugins()
 
     # Display menu function
