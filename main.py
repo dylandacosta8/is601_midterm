@@ -46,6 +46,9 @@ def repl():
     display_menu()
 
     while True:
+        # Print the currently active history file
+        print(f"\n[Active history file: {calculator.active_history_file}]")
+
         user_input = input("\nEnter command (e.g., add 5 3) or 'menu' to see options or 'exit' to quit: ").strip().lower()
 
         if user_input == "exit":
