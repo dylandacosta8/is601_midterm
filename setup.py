@@ -10,6 +10,7 @@ setup(
             'subtract = calculator.plugins.subtract:SubtractCommand',
             'multiply = calculator.plugins.multiply:MultiplyCommand',
             'divide = calculator.plugins.divide:DivideCommand',
+            'history = calculator.plugins.history:HistoryCommand',  # Registering HistoryCommand
         ],
     },
 )

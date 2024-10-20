@@ -2,6 +2,7 @@ import os
 import logging
 import concurrent.futures
 from calculator.plugins import PluginManager
+from calculator import Calculator
 from decimal import Decimal
 from dotenv import load_dotenv
 
@@ -28,8 +29,17 @@ else:  # 'prod'
 
 # REPL function
 def repl():
+    # Prompt the user to load a history file or use the default 'history.csv'
+    user_history_file = input("Enter the history file to load (press Enter for 'history.csv'): ").strip()
+
+    if not user_history_file:
+        user_history_file = "history.csv"  # Default to 'history.csv'
+
+    # Initialize the Calculator with the specified or default history file
+    calculator = Calculator(history_file=user_history_file)
+    
     # Initialize the PluginManager and load plugins
-    plugin_manager = PluginManager()
+    plugin_manager = PluginManager(calculator)
     plugin_manager.load_plugins()
 
     # Display menu function
@@ -38,12 +48,15 @@ def repl():
         print("\nAvailable plugins:")
         for command in plugin_manager.list_plugins():
             print(f" - {command}")
-        print("\nExample input: add 5 3")
+        print("\nExample input: add 5 3 or history load history.csv")
 
     # Display the menu when the application starts
     display_menu()
 
     while True:
+        # Print the currently active history file
+        print(f"\n[Active history file: {calculator.active_history_file}]")
+
         user_input = input("\nEnter command (e.g., add 5 3) or 'menu' to see options or 'exit' to quit: ").strip().lower()
 
         if user_input == "exit":
@@ -55,11 +68,34 @@ def repl():
             continue
 
         try:
-            operation, value1, value2 = user_input.split()
+            parts = user_input.split()
+            operation = parts[0]
 
-            # Convert values to Decimal
-            value1 = Decimal(value1)
-            value2 = Decimal(value2)
+            # Handle history subcommands
+            if operation == "history" and len(parts) > 1:
+                history_command = parts[1]
+                command_instance = plugin_manager.get_command("history")
+                if command_instance:
+                    if history_command == "load" and len(parts) == 3:
+                        filename = parts[2]
+                        command_instance.execute("load", filename)  # Call history.load
+                    elif history_command == "save" and len(parts) == 3:
+                        filename = parts[2]
+                        command_instance.execute("save", filename)  # Call history.save
+                    elif history_command == "clear":
+                        command_instance.execute("clear")  # Call history.clear
+                    elif history_command == "delete":
+                        command_instance.execute("delete")  # Call history.delete
+                    elif history_command == "show":
+                        command_instance.execute("show")  # Call history.show
+                    else:
+                        print("Invalid history command. Type 'menu' to see available options.")
+                else:
+                    print("History command not found.")
+                continue
+
+            # Convert values to Decimal for arithmetic operations
+            values = [Decimal(value) for value in parts[1:]] if len(parts) > 1 else []
 
             # Check if the operation is valid
             command_instance = plugin_manager.get_command(operation)
@@ -70,7 +106,7 @@ def repl():
 
             # Execute the command in a separate process
             with concurrent.futures.ProcessPoolExecutor() as executor:
-                future = executor.submit(command_instance.execute, value1, value2)
+                future = executor.submit(command_instance.execute, *values)
                 result = future.result()  # This will block until the result is available
 
             logging.debug(f"Operation '{operation}' executed with result: {result}")
@@ -89,3 +125,4 @@ def repl():
 # Starting the REPL
 if __name__ == "__main__":
     repl()
+
