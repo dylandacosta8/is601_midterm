@@ -15,6 +15,7 @@ class SubtractCommand:
         logger.info(f"Executed Subtract: {operand1} - {operand2} = {result}")
         return result
 
-    def help(self) -> str:
+    def show_help(self) -> None:
         """Provide help for the Subtract command."""
-        return "Usage: subtract <value1> <value2> - Subtracts second number from the first."
+        print("\nUsage: subtract <value1> <value2>")
+        print("Description: Subtracts the second number from the first.")

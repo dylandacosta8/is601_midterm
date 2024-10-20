@@ -6,5 +6,5 @@ class Command(ABC):
         pass
 
     @abstractmethod
-    def help(self):
+    def show_help(self):
         pass

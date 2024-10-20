@@ -18,6 +18,7 @@ class DivideCommand:
         logger.info(f"Executed Divide: {operand1} / {operand2} = {result}")
         return result
 
-    def help(self) -> str:
+    def show_help(self) -> None:
         """Provide help for the Divide command."""
-        return "Usage: divide <value1> <value2> - Divides first number by the second."
+        print("\nUsage: divide <value1> <value2>")
+        print("Description: Divides the first number by the second. Raises an error if the second number is zero.")
