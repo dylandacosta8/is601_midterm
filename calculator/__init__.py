@@ -2,7 +2,6 @@ import pandas as pd
 from decimal import Decimal
 import logging
 import os
-import shutil  # for copying files
 
 logger = logging.getLogger('calculator_app')
 
@@ -11,30 +10,39 @@ class Calculator:
         self.history_file = history_file
         self.active_history_file = self.history_file  # Track the currently active file
         self.history = self.load_history()  # Load history on initialization
+        self.new_entries = []  # Keep track of new entries added during the session
         logger.info(f"Initial history loaded from {self.active_history_file}")
 
     def add_to_history(self, operation: str, operands: list, result: Decimal) -> None:
         """Add a calculation to the history and save it to the active history file."""
-        new_entry = pd.DataFrame({
-            "operation": [operation],
-            "operands": [str(operands)],  # Store as string for easier CSV handling
-            "result": [result]
-        })
-        self.history = pd.concat([self.history, new_entry], ignore_index=True)  # Allow duplicates
+        new_entry = {
+            "operation": operation,
+            "operands": str(operands),  # Store as string for easier CSV handling
+            "result": result
+        }
+        # Append the new entry to the history DataFrame
+        self.history = pd.concat([self.history, pd.DataFrame([new_entry])], ignore_index=True)
+        
+        # Also append to the new_entries list to track this session's new additions
+        self.new_entries.append(new_entry)
+        
         logger.info(f"Added to history: {operation} with operands {operands} = {result}")
-        self.save_history()  # Save immediately after adding
+        self.save_history()  # Save only the new entry
 
     def save_history(self) -> None:
-        """Save the current history DataFrame to the active CSV file."""
-        if not self.history.empty:
-            history_to_save = self.history[['operation', 'operands', 'result']]  # Only save these columns
+        """Save only new entries to the active history file."""
+        if self.new_entries:  # If there are new entries to save
+            new_entries_df = pd.DataFrame(self.new_entries)
             if not os.path.isfile(self.active_history_file):
-                history_to_save.to_csv(self.active_history_file, mode='w', index=False)
+                new_entries_df.to_csv(self.active_history_file, mode='w', index=False)
                 logger.info(f"History saved to new file: {self.active_history_file}")
             else:
-                # Append new entries to the active history file instead of overwriting
-                history_to_save.to_csv(self.active_history_file, mode='a', index=False, header=False)
-                logger.info(f"New history appended to {self.active_history_file}")
+                # Append only the new entries to the active history file
+                new_entries_df.to_csv(self.active_history_file, mode='a', index=False, header=False)
+                logger.info(f"New entries appended to {self.active_history_file}")
+            
+            # Clear the new entries after saving
+            self.new_entries.clear()
 
     def load_history(self, new_filename: str = None) -> pd.DataFrame:
         """Load history from a new file or the active file."""
@@ -77,7 +85,7 @@ class Calculator:
             last_entry = self.history.iloc[-1]
             self.history = self.history.iloc[:-1]  # Drop last row using iloc
             logger.info(f"Deleted last calculation: {last_entry['operation']} with operands {last_entry['operands']} = {last_entry['result']}")
-            self.save_history()  # Save updated history to active file
+            self.save_as_new_file(self.active_history_file)  # Save updated history to active file
         else:
             logger.warning("Attempted to delete from empty history.")
 
