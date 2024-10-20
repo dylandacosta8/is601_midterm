@@ -1,7 +1,7 @@
 import os
 import logging
 import concurrent.futures
-from calculator.plugins import PluginManager
+from calculator.factory import CommandFactory
 from calculator import Calculator
 from decimal import Decimal
 from dotenv import load_dotenv
@@ -38,17 +38,13 @@ def repl():
     # Initialize the Calculator with the specified or default history file
     calculator = Calculator(history_file=user_history_file)
     
-    # Initialize the PluginManager and load plugins
-    plugin_manager = PluginManager(calculator)
-    plugin_manager.load_plugins()
-
     # Display menu function
     def display_menu():
         logging.debug("Displaying available plugins")
         print("\nAvailable commands:")
-        for command in plugin_manager.list_plugins():
+        for command in CommandFactory.command_classes.keys():
             print(f" - {command}")
-        print("\nRun <command> help to see additonal usage details.")
+        print("\nRun <command> help to see additional usage details.")
 
     # Display the menu when the application starts
     display_menu()
@@ -73,9 +69,9 @@ def repl():
 
             # Handle help commands
             if len(parts) > 1 and parts[1] == "help":
-                command_instance = plugin_manager.get_command(operation)  # Get the main command
+                command_instance = CommandFactory.create_command(operation, calculator)  # Get the command instance
                 if command_instance:
-                    command_instance.show_help()  # Call the show_help method for the add command
+                    command_instance.show_help()  # Call the show_help method for the command
                 else:
                     print("\nInvalid command for help. Type 'help' to see available plugins.")
                 continue
@@ -83,7 +79,7 @@ def repl():
             # Handle history subcommands
             if operation == "history" and len(parts) > 1:
                 history_command = parts[1]
-                command_instance = plugin_manager.get_command("history")
+                command_instance = CommandFactory.create_command("history", calculator)
                 if command_instance:
                     if history_command == "load" and len(parts) == 3:
                         filename = parts[2]
@@ -107,7 +103,7 @@ def repl():
             values = [Decimal(value) for value in parts[1:]] if len(parts) > 1 else []
 
             # Check if the operation is valid
-            command_instance = plugin_manager.get_command(operation)
+            command_instance = CommandFactory.create_command(operation, calculator)
             if command_instance is None:
                 logging.warning(f"Invalid operation attempted: {operation}")
                 print("\nInvalid operation. Type 'help' to see available plugins.")
@@ -135,4 +131,3 @@ def repl():
 # Starting the REPL
 if __name__ == "__main__":
     repl()
-
