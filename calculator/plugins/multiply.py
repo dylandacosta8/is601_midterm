@@ -15,6 +15,7 @@ class MultiplyCommand:
         logger.info(f"Executed Multiply: {operand1} * {operand2} = {result}")
         return result
 
-    def help(self) -> str:
+    def show_help(self) -> None:
         """Provide help for the Multiply command."""
-        return "Usage: multiply <value1> <value2> - Multiplies two numbers."
+        print("\nUsage: multiply <value1> <value2>")
+        print("Description: Multiplies two numbers.")

@@ -15,6 +15,7 @@ class AddCommand:
         logger.info(f"Executed Add: {operand1} + {operand2} = {result}")
         return result
 
-    def help(self) -> str:
+    def show_help(self) -> None:
         """Provide help for the Add command."""
-        return "Usage: add <value1> <value2> - Adds two numbers."
+        print("\nUsage: add <value1> <value2>")
+        print("Description: Adds two numbers.")

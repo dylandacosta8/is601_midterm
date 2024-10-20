@@ -45,10 +45,10 @@ def repl():
     # Display menu function
     def display_menu():
         logging.debug("Displaying available plugins")
-        print("\nAvailable plugins:")
+        print("\nAvailable commands:")
         for command in plugin_manager.list_plugins():
             print(f" - {command}")
-        print("\nExample input: add 5 3 or history load history.csv")
+        print("\nRun <command> help to see additonal usage details.")
 
     # Display the menu when the application starts
     display_menu()
@@ -57,19 +57,28 @@ def repl():
         # Print the currently active history file
         print(f"\n[Active history file: {calculator.active_history_file}]")
 
-        user_input = input("\nEnter command (e.g., add 5 3) or 'menu' to see options or 'exit' to quit: ").strip().lower()
+        user_input = input("Enter command or 'help' to see options or 'exit' to quit: ").strip().lower()
 
         if user_input == "exit":
             logging.info("User exited the application.")
-            print("Exiting the calculator. Goodbye!")
+            print("\nExiting the calculator. Goodbye!")
             break
-        elif user_input == "menu":
+        elif user_input == "help":
             display_menu()
             continue
 
         try:
             parts = user_input.split()
             operation = parts[0]
+
+            # Handle help commands
+            if len(parts) > 1 and parts[1] == "help":
+                command_instance = plugin_manager.get_command(operation)  # Get the main command
+                if command_instance:
+                    command_instance.show_help()  # Call the show_help method for the add command
+                else:
+                    print("\nInvalid command for help. Type 'help' to see available plugins.")
+                continue
 
             # Handle history subcommands
             if operation == "history" and len(parts) > 1:
@@ -89,9 +98,9 @@ def repl():
                     elif history_command == "show":
                         command_instance.execute("show")  # Call history.show
                     else:
-                        print("Invalid history command. Type 'menu' to see available options.")
+                        print("\nInvalid subcommand. Use load, save, clear, delete, or show.")
                 else:
-                    print("History command not found.")
+                    print("\nHistory command not found.")
                 continue
 
             # Convert values to Decimal for arithmetic operations
@@ -101,7 +110,7 @@ def repl():
             command_instance = plugin_manager.get_command(operation)
             if command_instance is None:
                 logging.warning(f"Invalid operation attempted: {operation}")
-                print("Invalid operation. Type 'menu' to see available plugins.")
+                print("\nInvalid operation. Type 'help' to see available plugins.")
                 continue
 
             # Execute the command in a separate process
@@ -110,17 +119,18 @@ def repl():
                 result = future.result()  # This will block until the result is available
 
             logging.debug(f"Operation '{operation}' executed with result: {result}")
-            print(f"Result: {result}")
+            print(f"\nResult: {result}")
 
         except ValueError:
             logging.error("Invalid input provided.")
-            print("Invalid input. Please enter valid numbers and an operation.")
+            print("\nInvalid input. Please enter valid numbers and an operation.")
         except ZeroDivisionError:
             logging.error("Division by zero attempted.")
-            print("Error: Division by zero.")
+            print("\nError: Division by zero.")
         except Exception as e:
             logging.exception(f"An error occurred during command execution: {e}")
-            print(f"An error occurred: {e}")
+            print(f"\nAn error occurred: {e}")
+            print("Run <command> help to see usage details.")
 
 # Starting the REPL
 if __name__ == "__main__":
