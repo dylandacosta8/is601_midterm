@@ -1,4 +1,4 @@
-import pandas as pd 
+import pandas as pd
 from decimal import Decimal
 import logging
 import os
@@ -9,9 +9,15 @@ class Calculator:
     def __init__(self, history_file: str = "history.csv"):
         self.history_file = history_file
         self.active_history_file = self.history_file  # Track the currently active file
-        self.history = self.load_history()  # Load history on initialization
+        if os.path.isfile(self.history_file) and os.path.getsize(self.history_file) > 0:
+            # If file exists and is not empty, load history from it
+            self.history = self.load_history(self.history_file)
+            logger.info(f"History loaded from {self.history_file}")
+        else:
+            # Otherwise, start with an empty history
+            self.history = pd.DataFrame(columns=["operation", "operands", "result"])
+            logger.info(f"Starting with empty history, no valid file found at {self.history_file}")
         self.new_entries = []  # Keep track of new entries added during the session
-        logger.info(f"Initial history loaded from {self.active_history_file}")
 
     def add_to_history(self, operation: str, operands: list, result: Decimal) -> None:
         """Add a calculation to the history and save it to the active history file."""

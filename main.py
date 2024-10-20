@@ -29,8 +29,16 @@ else:  # 'prod'
 
 # REPL function
 def repl():
+    # Prompt the user to load a history file or use the default 'history.csv'
+    user_history_file = input("Enter the history file to load (press Enter for 'history.csv'): ").strip()
+
+    if not user_history_file:
+        user_history_file = "history.csv"  # Default to 'history.csv'
+
+    # Initialize the Calculator with the specified or default history file
+    calculator = Calculator(history_file=user_history_file)
+    
     # Initialize the PluginManager and load plugins
-    calculator = Calculator()
     plugin_manager = PluginManager(calculator)
     plugin_manager.load_plugins()
 
@@ -117,3 +125,4 @@ def repl():
 # Starting the REPL
 if __name__ == "__main__":
     repl()
+
