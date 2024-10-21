@@ -177,3 +177,7 @@ class Calculator:
             history_to_save = self.history[['operation', 'operands', 'result']]
             history_to_save.to_csv(full_path, mode='w', index=False)
             logger.info(f"History saved as a copy to {full_path}")
+
+    def get_history(self):
+        """Retrieve the calculation history as a list of dictionaries."""
+        return self.history.to_dict(orient='records') if isinstance(self.history, pd.DataFrame) else self.history
