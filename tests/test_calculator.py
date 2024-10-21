@@ -20,7 +20,7 @@ from calculator.plugins.multiply import MultiplyCommand
 def calculator():
     """Fixture to create a Calculator instance with a valid history file."""
     history_file = os.path.join('data', 'test_history.csv')  # Provide a test history file
-    
+
     # Create the data directory if it does not exist
     os.makedirs('data', exist_ok=True)
 
