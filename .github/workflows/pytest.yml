@@ -2,9 +2,9 @@ name: Pytest
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "pytests_update" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "pytests_update" ]
 
 permissions:
   contents: read
