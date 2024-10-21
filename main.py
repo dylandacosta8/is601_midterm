@@ -16,8 +16,8 @@ environment = os.getenv('ENV', 'prod').lower()
 log_format = "%(asctime)s - %(levelname)s - %(message)s"
 date_format = "%Y-%m-%d %H:%M:%S"
 
-# Configure logging to write to a file called calc.log in the same directory
-log_file = 'calc.log'
+os.makedirs('logs', exist_ok=True)
+log_file = os.path.join('logs', 'calc.log')
 
 # Configure logging based on environment, writing to a file
 if environment == 'dev':
@@ -33,7 +33,9 @@ def repl():
     user_history_file = input("Enter the history file to load (press Enter for 'history.csv'): ").strip()
 
     if not user_history_file:
-        user_history_file = "history.csv"  # Default to 'history.csv'
+        user_history_file = os.path.join('data', 'history.csv')
+    else:
+        user_history_file = os.path.join('data', user_history_file)
 
     # Initialize the Calculator with the specified or default history file
     calculator = Calculator(history_file=user_history_file)
