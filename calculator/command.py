@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class Command(ABC):
     @abstractmethod
-    def execute(self, a=None, b=None):
+    def execute(self, *args, **kwargs):
         pass
 
     @abstractmethod

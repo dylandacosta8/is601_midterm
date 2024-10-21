@@ -6,7 +6,8 @@ import os
 logger = logging.getLogger('calculator_app')
 
 class Calculator:
-    def __init__(self, history_file: str = "history.csv"):
+    def __init__(self, history_file: str = None):
+
         self.history_file = history_file
         self.active_history_file = self.history_file  # Track the currently active file
         if os.path.isfile(self.history_file) and os.path.getsize(self.history_file) > 0:
@@ -53,17 +54,24 @@ class Calculator:
     def load_history(self, new_filename: str = None) -> pd.DataFrame:
         """Load history from a new file or the active file."""
         if new_filename:
-            if os.path.isfile(new_filename):
-                self.active_history_file = new_filename  # Switch to the new file
+
+            if "data" in new_filename:
+                full_path = new_filename
+            else:
+                full_path = os.path.join('data', new_filename)
+
+            if os.path.isfile(full_path):
+                self.active_history_file = full_path
                 logger.info(f"Switched to history file: {self.active_history_file}")
                 # Load new history and reset current history
-                loaded_history = pd.read_csv(new_filename)
+                loaded_history = pd.read_csv(full_path)
                 self.history = loaded_history
                 return loaded_history
             else:
-                logger.error(f"History file '{new_filename}' does not exist.")
+                logger.error(f"History file '{full_path}' does not exist.")
                 return pd.DataFrame(columns=["operation", "operands", "result"])
         
+        # Load from the active history file
         if os.path.isfile(self.active_history_file):
             try:
                 loaded_history = pd.read_csv(self.active_history_file)
@@ -75,6 +83,7 @@ class Calculator:
         else:
             logger.warning(f"No history file found: {self.active_history_file}. Starting with empty history.")
             return pd.DataFrame(columns=["operation", "operands", "result"])
+
 
     def clear_history(self) -> None:
         """Clear the calculation history by deleting the active file."""
@@ -98,17 +107,23 @@ class Calculator:
     def show_history(self) -> None:
         """Print the current history in a user-friendly format."""
         # Load history from the active file
-        self.history = self.load_history(self.active_history_file)  # Always read from the active history file
+        self.history = self.load_history(self.active_history_file)
+        
         if self.history.empty:
             print("No history recorded.")
             return
 
         # Split operands into operand1 and operand2 columns for display purposes
-        display_history = self.history.copy()
-        display_history[['operand1', 'operand2']] = pd.DataFrame(
-            display_history['operands'].apply(lambda op: eval(op) if isinstance(op, str) else op).tolist(),
-            index=display_history.index
-        )
+        try:
+            display_history = self.history.copy()
+            display_history[['operand1', 'operand2']] = pd.DataFrame(
+                display_history['operands'].apply(lambda op: eval(op) if isinstance(op, str) else op).tolist(),
+                index=display_history.index
+            )
+        except Exception as e:
+            logger.error(f"Failed to process operands for display: {e}")
+            print("Error processing history data.")
+            return
 
         # Display the formatted history
         print("\nCurrent History:")
@@ -120,6 +135,20 @@ class Calculator:
 
     def save_as_new_file(self, new_filename: str) -> None:
         """Save a copy of the current history to a new file."""
-        history_to_save = self.history[['operation', 'operands', 'result']]  # Ensure only these columns are saved
-        history_to_save.to_csv(new_filename, mode='w', index=False)
-        logger.info(f"History saved as a copy to {new_filename}")
+
+        self.history = self.load_history(self.active_history_file)
+        
+        if self.history.empty:
+            print("No history to save.")
+            return
+        else:
+            # Ensure the directory exists; if not, create it
+            os.makedirs('data', exist_ok=True)
+        
+            # Combine the directory with the new filename
+            full_path = os.path.join('data', new_filename)
+        
+            # Ensure only the necessary columns are saved
+            history_to_save = self.history[['operation', 'operands', 'result']]
+            history_to_save.to_csv(full_path, mode='w', index=False)
+            logger.info(f"History saved as a copy to {full_path}")
