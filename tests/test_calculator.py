@@ -20,14 +20,20 @@ from calculator.plugins.multiply import MultiplyCommand
 def calculator():
     """Fixture to create a Calculator instance with a valid history file."""
     history_file = os.path.join('data', 'test_history.csv')  # Provide a test history file
-    # Create an empty history file for testing purposes
-    with open(history_file, 'a', encoding='utf-8'):
-        pass  # Create the file if it doesn't exist
+    
+    # Create the data directory if it does not exist
+    os.makedirs('data', exist_ok=True)
+
+    # Create an empty history file for testing purposes if it doesn't exist
+    if not os.path.exists(history_file):
+        with open(history_file, 'w', encoding='utf-8'):
+            pass  # Create the file
 
     calc = Calculator(history_file=history_file)
     yield calc
     # Cleanup the test history file after the test
     os.remove(history_file)
+
 
 @pytest.fixture
 def plugin_manager(calculator):
