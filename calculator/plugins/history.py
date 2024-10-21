@@ -16,7 +16,7 @@ class HistoryCommand(Command):
         if subcommand == "load":
             if filename is None:
                 filename = input("Enter the filename to load history: ")
-            self.calculator.load_history(filename)  # Switch to new file
+            self.calculator.load_history(filename)
         elif subcommand == "save":
             if filename is None:
                 filename = input("Enter the filename to save history: ")
