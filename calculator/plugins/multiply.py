@@ -10,10 +10,20 @@ class MultiplyCommand:
 
     def execute(self, operand1: Decimal, operand2: Decimal) -> Decimal:
         """Execute the multiplication operation and record it in history."""
-        result = operand1 * operand2
-        self.calculator.add_to_history("multiply", [operand1, operand2], result)
-        logger.info(f"Executed Multiply: {operand1} * {operand2} = {result}")
-        return result
+        # LBYL: Check if both operands are valid Decimal numbers before proceeding
+        if isinstance(operand1, Decimal) and isinstance(operand2, Decimal):
+            try:
+                # EAFP: Perform the multiplication and catch any unexpected exceptions
+                result = operand1 * operand2
+                self.calculator.add_to_history("multiply", [operand1, operand2], result)
+                logger.info(f"Executed Multiply: {operand1} * {operand2} = {result}")
+                return result
+            except Exception as e:
+                logger.error(f"Error during multiplication: {e}")
+                raise e  # Reraise the exception after logging
+        else:
+            logger.warning(f"Invalid operands for multiplication: {operand1}, {operand2}")
+            raise ValueError("Operands must be Decimal numbers")
 
     def show_help(self) -> None:
         """Provide help for the Multiply command."""
