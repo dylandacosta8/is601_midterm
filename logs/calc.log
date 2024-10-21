@@ -3389,3 +3389,196 @@ TypeError: Command() takes no arguments
 2024-10-20 21:04:56 - DEBUG - Operation 'add' executed with result: 300
 2024-10-20 21:04:59 - INFO - Switched to history file: data\new.csv
 2024-10-20 21:05:21 - INFO - User exited the application.
+2024-10-20 22:42:58 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-20 22:42:58 - DEBUG - Displaying available plugins
+2024-10-20 22:43:03 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-20 22:43:03 - INFO - History saved to new file: data\history.csv
+2024-10-20 22:43:03 - INFO - Executed Add: 5 + 3 = 8
+2024-10-20 22:43:03 - DEBUG - Operation 'add' executed with result: 8
+2024-10-20 22:43:11 - INFO - Added to history: subtract with operands [Decimal('9'), Decimal('8')] = 1
+2024-10-20 22:43:11 - INFO - New entries appended to data\history.csv
+2024-10-20 22:43:11 - INFO - Executed Subtract: 9 - 8 = 1
+2024-10-20 22:43:11 - DEBUG - Operation 'subtract' executed with result: 1
+2024-10-20 22:43:15 - ERROR - Division by zero attempted.
+2024-10-20 22:43:15 - ERROR - Division by zero attempted.
+2024-10-20 22:43:18 - INFO - Added to history: divide with operands [Decimal('4'), Decimal('1')] = 4
+2024-10-20 22:43:18 - INFO - New entries appended to data\history.csv
+2024-10-20 22:43:18 - INFO - Executed Divide: 4 / 1 = 4
+2024-10-20 22:43:18 - DEBUG - Operation 'divide' executed with result: 4
+2024-10-20 22:43:26 - INFO - Added to history: multiply with operands [Decimal('4'), Decimal('4')] = 16
+2024-10-20 22:43:26 - INFO - New entries appended to data\history.csv
+2024-10-20 22:43:26 - INFO - Executed Multiply: 4 * 4 = 16
+2024-10-20 22:43:26 - DEBUG - Operation 'multiply' executed with result: 16
+2024-10-20 22:43:31 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:43:31 - INFO - Displayed current history.
+2024-10-20 22:43:50 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:43:50 - INFO - History saved as a copy to data\new.csv
+2024-10-20 22:43:50 - INFO - Successfully saved history to new.csv
+2024-10-20 22:44:06 - WARNING - File not found: new.csv
+2024-10-20 22:46:27 - INFO - User exited the application.
+2024-10-20 22:50:08 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:50:08 - INFO - History loaded from data\history.csv
+2024-10-20 22:50:08 - DEBUG - Displaying available plugins
+2024-10-20 22:50:11 - WARNING - File not found: new.csv
+2024-10-20 22:53:39 - INFO - User exited the application.
+2024-10-20 22:53:42 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:53:42 - INFO - History loaded from data\history.csv
+2024-10-20 22:53:42 - DEBUG - Displaying available plugins
+2024-10-20 22:53:50 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:53:50 - INFO - Displayed current history.
+2024-10-20 22:53:54 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:53:54 - INFO - Successfully loaded history from data\new.csv
+2024-10-20 22:53:59 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:53:59 - INFO - Displayed current history.
+2024-10-20 22:54:09 - INFO - Added to history: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444444444444444
+2024-10-20 22:54:09 - INFO - New entries appended to data\new.csv
+2024-10-20 22:54:09 - INFO - Executed Divide: 4 / 9 = 0.4444444444444444444444444444
+2024-10-20 22:54:09 - DEBUG - Operation 'divide' executed with result: 0.4444444444444444444444444444
+2024-10-20 22:54:18 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:54:18 - INFO - Displayed current history.
+2024-10-20 22:54:23 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 22:54:23 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:54:23 - ERROR - Error saving history to data\new.csv: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 22:54:23 - INFO - Last calculation deleted successfully.
+2024-10-20 22:54:25 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:54:25 - INFO - Displayed current history.
+2024-10-20 22:54:45 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 22:54:45 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:54:45 - ERROR - Error saving history to data\new.csv: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 22:54:45 - INFO - Last calculation deleted successfully.
+2024-10-20 22:54:46 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:54:46 - INFO - Displayed current history.
+2024-10-20 22:58:14 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 22:58:14 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:14 - ERROR - Error saving history to data\new.csv: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 22:58:14 - INFO - Last calculation deleted successfully.
+2024-10-20 22:58:16 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:16 - INFO - Displayed current history.
+2024-10-20 22:58:17 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:17 - INFO - Displayed current history.
+2024-10-20 22:58:19 - INFO - User exited the application.
+2024-10-20 22:58:22 - INFO - Switched to history file: data\history.csv
+2024-10-20 22:58:22 - INFO - History loaded from data\history.csv
+2024-10-20 22:58:22 - DEBUG - Displaying available plugins
+2024-10-20 22:58:24 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:24 - INFO - Successfully loaded history from data\new.csv
+2024-10-20 22:58:27 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:27 - INFO - Displayed current history.
+2024-10-20 22:58:29 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 22:58:29 - INFO - Switched to history file: data\new.csv
+2024-10-20 22:58:29 - ERROR - Error deleting last calculation: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 23:00:53 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:00:53 - INFO - Displayed current history.
+2024-10-20 23:11:51 - INFO - User exited the application.
+2024-10-20 23:13:48 - INFO - Switched to history file: data\history.csv
+2024-10-20 23:13:48 - INFO - History loaded from data\history.csv
+2024-10-20 23:13:48 - DEBUG - Displaying available plugins
+2024-10-20 23:13:53 - INFO - Switched to history file: data\history.csv
+2024-10-20 23:13:53 - INFO - Displayed current history.
+2024-10-20 23:13:58 - INFO - Deleted last calculation: multiply with operands [Decimal('4'), Decimal('4')] = 16
+2024-10-20 23:13:58 - INFO - Switched to history file: data\history.csv
+2024-10-20 23:13:58 - ERROR - Error deleting last calculation: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 23:14:17 - INFO - Cleared history by deleting file: data\history.csv
+2024-10-20 23:14:17 - INFO - History cleared successfully.
+2024-10-20 23:18:42 - INFO - User exited the application.
+2024-10-20 23:18:49 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:18:49 - INFO - History loaded from data\new.csv
+2024-10-20 23:18:49 - DEBUG - Displaying available plugins
+2024-10-20 23:18:51 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:18:51 - INFO - Displayed current history.
+2024-10-20 23:18:55 - ERROR - Error deleting last calculation: Calculator.delete_last_calculation() takes 1 positional argument but 2 were given
+2024-10-20 23:19:28 - INFO - User exited the application.
+2024-10-20 23:19:36 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:19:36 - INFO - History loaded from data\new.csv
+2024-10-20 23:19:36 - DEBUG - Displaying available plugins
+2024-10-20 23:19:39 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:19:39 - INFO - Displayed current history.
+2024-10-20 23:19:41 - ERROR - Error deleting last calculation: 'str' object has no attribute 'history'
+2024-10-20 23:31:16 - INFO - User exited the application.
+2024-10-20 23:34:05 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:34:05 - INFO - History loaded from data\new.csv
+2024-10-20 23:34:05 - DEBUG - Displaying available plugins
+2024-10-20 23:34:07 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:34:07 - INFO - Displayed current history.
+2024-10-20 23:34:09 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:34:09 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:34:09 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:34:09 - ERROR - Error deleting last calculation: Cannot save file into a non-existent directory: 'data\data'
+2024-10-20 23:36:50 - INFO - User exited the application.
+2024-10-20 23:36:55 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:36:55 - INFO - History loaded from data\new.csv
+2024-10-20 23:36:55 - DEBUG - Displaying available plugins
+2024-10-20 23:36:57 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:36:57 - INFO - Displayed current history.
+2024-10-20 23:37:00 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:37:00 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:37:00 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:37:00 - INFO - History saved as a copy to data\new.csv
+2024-10-20 23:37:00 - INFO - Last calculation deleted successfully.
+2024-10-20 23:37:06 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:37:06 - INFO - Displayed current history.
+2024-10-20 23:38:12 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:12 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:38:12 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:12 - INFO - History saved as a copy to data\new.csv
+2024-10-20 23:38:12 - INFO - Last calculation deleted successfully.
+2024-10-20 23:38:45 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:45 - INFO - Displayed current history.
+2024-10-20 23:38:47 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:47 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:38:47 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:47 - INFO - History saved as a copy to data\new.csv
+2024-10-20 23:38:47 - INFO - Last calculation deleted successfully.
+2024-10-20 23:38:49 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:38:49 - INFO - Displayed current history.
+2024-10-20 23:40:43 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:40:43 - INFO - History saved as a copy to data\test.csv
+2024-10-20 23:40:43 - INFO - Successfully saved history to data\test.csv
+2024-10-20 23:41:02 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:41:02 - INFO - Successfully loaded history from data\test.csv
+2024-10-20 23:41:06 - INFO - Added to history: add with operands [Decimal('100'), Decimal('9')] = 109
+2024-10-20 23:41:06 - INFO - New entries appended to data\test.csv
+2024-10-20 23:41:06 - INFO - Executed Add: 100 + 9 = 109
+2024-10-20 23:41:06 - DEBUG - Operation 'add' executed with result: 109
+2024-10-20 23:41:13 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:41:13 - INFO - Displayed current history.
+2024-10-20 23:41:18 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:41:18 - INFO - Deleted last calculation: add with operands [Decimal('100'), Decimal('9')] = 109.0
+2024-10-20 23:41:18 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:41:18 - INFO - History saved as a copy to data\test.csv
+2024-10-20 23:41:18 - INFO - Last calculation deleted successfully.
+2024-10-20 23:41:35 - INFO - User exited the application.
+2024-10-20 23:44:10 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:44:10 - INFO - History loaded from data\new.csv
+2024-10-20 23:44:10 - DEBUG - Displaying available plugins
+2024-10-20 23:44:14 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:44:14 - INFO - Displayed current history.
+2024-10-20 23:44:16 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:44:16 - INFO - Last calculation deleted successfully.
+2024-10-20 23:44:18 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:44:18 - INFO - Displayed current history.
+2024-10-20 23:44:20 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:44:20 - INFO - Displayed current history.
+2024-10-20 23:44:21 - INFO - Deleted last calculation: divide with operands [Decimal('4'), Decimal('9')] = 0.4444444444444444
+2024-10-20 23:44:21 - INFO - Last calculation deleted successfully.
+2024-10-20 23:44:41 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:44:41 - INFO - Displayed current history.
+2024-10-20 23:45:51 - INFO - User exited the application.
+2024-10-20 23:45:56 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:45:56 - INFO - History loaded from data\new.csv
+2024-10-20 23:45:56 - DEBUG - Displaying available plugins
+2024-10-20 23:45:59 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:45:59 - INFO - Displayed current history.
+2024-10-20 23:46:03 - INFO - Deleted the last calculation from data\new.csv.
+2024-10-20 23:46:03 - INFO - Last calculation deleted successfully.
+2024-10-20 23:46:05 - INFO - Switched to history file: data\new.csv
+2024-10-20 23:46:05 - INFO - Displayed current history.
+2024-10-20 23:46:16 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:46:16 - INFO - Successfully loaded history from data\test.csv
+2024-10-20 23:46:21 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:46:21 - INFO - Displayed current history.
+2024-10-20 23:46:25 - INFO - Deleted the last calculation from data\test.csv.
+2024-10-20 23:46:25 - INFO - Last calculation deleted successfully.
+2024-10-20 23:46:27 - INFO - Switched to history file: data\test.csv
+2024-10-20 23:46:27 - INFO - Displayed current history.
+2024-10-20 23:46:31 - INFO - User exited the application.
