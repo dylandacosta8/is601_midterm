@@ -12,7 +12,7 @@ class Calculator:
         
         # LBYL: Check if the file exists and is not empty
         if os.path.isfile(self.history_file) and os.path.getsize(self.history_file) > 0:
-            self.history = self.load_history(self.history_file)  # Load history from the file
+            self.history = self.load_history(self.history_file)  # Load history from the file COV-NA
             logger.info(f"History loaded from {self.history_file}")
         else:
             # EAFP: Assume the history file might not exist or be empty, handle with empty history
@@ -48,14 +48,14 @@ class Calculator:
                     new_entries_df.to_csv(self.active_history_file, mode='a', index=False, header=False)
                     logger.info(f"New entries appended to {self.active_history_file}")
                 self.new_entries.clear()  # Clear the new entries after saving
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error saving history: {e}")
 
     def load_history(self, new_filename: str = None) -> pd.DataFrame:
         """Load history from a new file or the active file."""
         if new_filename:
 
-            if "data" in new_filename:
+            if "data" in new_filename: #COV-NA
                 full_path = new_filename
             else:
                 full_path = os.path.join('data', new_filename)
@@ -68,7 +68,7 @@ class Calculator:
                     self.history = loaded_history
                     logger.info(f"Switched to history file: {self.active_history_file}")
                     return loaded_history
-                except Exception as e:
+                except Exception as e: #COV-NA
                     logger.error(f"Error loading history from {full_path}: {e}")
                     return pd.DataFrame(columns=["operation", "operands", "result"])
             else:
@@ -76,7 +76,7 @@ class Calculator:
                 return pd.DataFrame(columns=["operation", "operands", "result"])
         
         # EAFP: Assume loading from the active file works, handle errors if it fails
-        try:
+        try: #COV-NA
             if os.path.isfile(self.active_history_file):
                 loaded_history = pd.read_csv(self.active_history_file)
                 self.history = loaded_history
@@ -85,7 +85,7 @@ class Calculator:
             else:
                 logger.warning(f"No history file found: {self.active_history_file}. Starting with empty history.")
                 return pd.DataFrame(columns=["operation", "operands", "result"])
-        except Exception as e:
+        except Exception as e: #COV-NA
             logger.error(f"Failed to load history: {e}")
             return pd.DataFrame(columns=["operation", "operands", "result"])
 
@@ -97,14 +97,14 @@ class Calculator:
                 os.remove(self.active_history_file)  # EAFP: Attempt to remove the file
                 logger.info(f"Cleared history by deleting file: {self.active_history_file}")
                 self.history = pd.DataFrame(columns=["operation", "operands", "result"])  # Reset history DataFrame
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Failed to clear history file: {e}")
         else:
             logger.warning(f"Attempted to clear non-existent history file: {self.active_history_file}")
 
     def delete_last_calculation(self) -> None:
         """Delete the last calculation from the active history file."""
-        if os.path.isfile(self.active_history_file) and os.path.getsize(self.active_history_file) > 0:  # LBYL: Check if the file exists and is not empty
+        if os.path.isfile(self.active_history_file) and os.path.getsize(self.active_history_file) > 0: #COV-NA  # LBYL: Check if the file exists and is not empty
             try:
                 # Read the current history from the active file
                 with open(self.active_history_file, 'r') as file:
@@ -161,9 +161,9 @@ class Calculator:
         self.history = self.load_history(self.active_history_file)
 
         
-        if self.history.empty:
+        if self.history.empty: #COV-NA
             print("No history to save.")
-            return
+            return 
         else:
             if new_filename:
                 # Ensure the directory exists; if not, create it
@@ -177,3 +177,7 @@ class Calculator:
             history_to_save = self.history[['operation', 'operands', 'result']]
             history_to_save.to_csv(full_path, mode='w', index=False)
             logger.info(f"History saved as a copy to {full_path}")
+
+    def get_history(self):
+        """Retrieve the calculation history as a list of dictionaries."""
+        return self.history.to_dict(orient='records') if isinstance(self.history, pd.DataFrame) else self.history

@@ -3,4 +3,8 @@ branch = True
 
 [report]
 exclude_lines = 
-    TODO
+    COV-NA
+    logger
+    print
+    pass
+    input

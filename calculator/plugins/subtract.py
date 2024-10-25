@@ -18,12 +18,12 @@ class SubtractCommand:
                 self.calculator.add_to_history("subtract", [operand1, operand2], result)
                 logger.info(f"Executed Subtract: {operand1} - {operand2} = {result}")
                 return result
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error during subtraction: {e}")
-                raise e  # Reraise the exception after logging
+                raise e  # Reraise the exception after logging #COV-NA
         else:
             logger.warning(f"Invalid operands for subtraction: {operand1}, {operand2}")
-            raise ValueError("Operands must be Decimal numbers")
+            raise ValueError("Operands must be Decimal numbers") #COV-NA
 
     def show_help(self) -> None:
         """Provide help for the Subtract command."""

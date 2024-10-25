@@ -3582,3 +3582,83 @@ TypeError: Command() takes no arguments
 2024-10-20 23:46:27 - INFO - Switched to history file: data\test.csv
 2024-10-20 23:46:27 - INFO - Displayed current history.
 2024-10-20 23:46:31 - INFO - User exited the application.
+2024-10-25 15:34:40 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 15:34:40 - DEBUG - Displaying available plugins
+2024-10-25 15:34:48 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-25 15:34:48 - INFO - History saved to new file: data\history.csv
+2024-10-25 15:34:48 - INFO - Executed Add: 5 + 3 = 8
+2024-10-25 15:34:48 - DEBUG - Operation 'add' executed with result: 8
+2024-10-25 15:34:52 - INFO - Added to history: add with operands [Decimal('7'), Decimal('2')] = 9
+2024-10-25 15:34:52 - INFO - New entries appended to data\history.csv
+2024-10-25 15:34:52 - INFO - Executed Add: 7 + 2 = 9
+2024-10-25 15:34:52 - DEBUG - Operation 'add' executed with result: 9
+2024-10-25 15:34:59 - INFO - Deleted the last calculation from data\history.csv.
+2024-10-25 15:34:59 - INFO - Last calculation deleted successfully.
+2024-10-25 15:35:05 - INFO - Switched to history file: data\history.csv
+2024-10-25 15:35:05 - INFO - Displayed current history.
+2024-10-25 15:35:24 - INFO - User exited the application.
+2024-10-25 15:35:53 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 15:35:53 - DEBUG - Displaying available plugins
+2024-10-25 15:35:57 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-25 15:35:57 - INFO - History saved to new file: data\history.csv
+2024-10-25 15:35:57 - INFO - Executed Add: 5 + 3 = 8
+2024-10-25 15:35:57 - DEBUG - Operation 'add' executed with result: 8
+2024-10-25 15:36:04 - INFO - Added to history: add with operands [Decimal('7'), Decimal('2')] = 9
+2024-10-25 15:36:04 - INFO - New entries appended to data\history.csv
+2024-10-25 15:36:04 - INFO - Executed Add: 7 + 2 = 9
+2024-10-25 15:36:04 - DEBUG - Operation 'add' executed with result: 9
+2024-10-25 15:36:11 - INFO - User exited the application.
+2024-10-25 15:43:42 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 15:43:42 - DEBUG - Displaying available plugins
+2024-10-25 15:43:45 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-25 15:43:45 - INFO - History saved to new file: data\history.csv
+2024-10-25 15:43:45 - INFO - Executed Add: 5 + 3 = 8
+2024-10-25 15:43:45 - DEBUG - Operation 'add' executed with result: 8
+2024-10-25 15:43:55 - INFO - Switched to history file: data\history.csv
+2024-10-25 15:43:55 - INFO - Displayed current history.
+2024-10-25 15:44:03 - INFO - Switched to history file: data\history.csv
+2024-10-25 15:44:03 - INFO - History saved as a copy to data\new.csv
+2024-10-25 15:44:03 - INFO - Successfully saved history to data\new.csv
+2024-10-25 15:44:16 - INFO - Switched to history file: data\new.csv
+2024-10-25 15:44:16 - INFO - Successfully loaded history from data\new.csv
+2024-10-25 15:44:19 - INFO - Switched to history file: data\new.csv
+2024-10-25 15:44:19 - INFO - Displayed current history.
+2024-10-25 15:44:24 - INFO - User exited the application.
+2024-10-25 17:19:07 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 17:19:07 - DEBUG - Displaying available plugins
+2024-10-25 17:19:10 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-25 17:19:10 - INFO - History saved to new file: data\history.csv
+2024-10-25 17:19:10 - INFO - Executed Add: 5 + 3 = 8
+2024-10-25 17:19:10 - DEBUG - Operation 'add' executed with result: 8
+2024-10-25 17:20:32 - INFO - User exited the application.
+2024-10-25 18:32:04 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 18:32:04 - DEBUG - Displaying available plugins
+2024-10-25 18:32:07 - INFO - Added to history: add with operands [Decimal('5'), Decimal('3')] = 8
+2024-10-25 18:32:07 - INFO - History saved to new file: data\history.csv
+2024-10-25 18:32:07 - INFO - Executed Add: 5 + 3 = 8
+2024-10-25 18:32:07 - DEBUG - Operation 'add' executed with result: 8
+2024-10-25 18:32:08 - INFO - User exited the application.
+2024-10-25 18:49:51 - INFO - Starting with empty history, no valid file found at data\history.csv
+2024-10-25 18:49:51 - DEBUG - Displaying available plugins
+2024-10-25 18:49:54 - INFO - Added to history: add with operands [Decimal('5'), Decimal('7')] = 12
+2024-10-25 18:49:54 - INFO - History saved to new file: data\history.csv
+2024-10-25 18:49:54 - INFO - Executed Add: 5 + 7 = 12
+2024-10-25 18:49:54 - DEBUG - Operation 'add' executed with result: 12
+2024-10-25 18:49:59 - INFO - Added to history: divide with operands [Decimal('10'), Decimal('12')] = 0.8333333333333333333333333333
+2024-10-25 18:49:59 - INFO - New entries appended to data\history.csv
+2024-10-25 18:49:59 - INFO - Executed Divide: 10 / 12 = 0.8333333333333333333333333333
+2024-10-25 18:49:59 - DEBUG - Operation 'divide' executed with result: 0.8333333333333333333333333333
+2024-10-25 18:50:04 - INFO - Added to history: multiply with operands [Decimal('5'), Decimal('4')] = 20
+2024-10-25 18:50:04 - INFO - New entries appended to data\history.csv
+2024-10-25 18:50:04 - INFO - Executed Multiply: 5 * 4 = 20
+2024-10-25 18:50:04 - DEBUG - Operation 'multiply' executed with result: 20
+2024-10-25 18:50:12 - INFO - Added to history: subtract with operands [Decimal('100'), Decimal('1000')] = -900
+2024-10-25 18:50:12 - INFO - New entries appended to data\history.csv
+2024-10-25 18:50:12 - INFO - Executed Subtract: 100 - 1000 = -900
+2024-10-25 18:50:12 - DEBUG - Operation 'subtract' executed with result: -900
+2024-10-25 18:50:20 - INFO - User exited the application.
+2024-10-25 19:01:35 - INFO - Switched to history file: data\history.csv
+2024-10-25 19:01:35 - INFO - History loaded from data\history.csv
+2024-10-25 19:01:35 - DEBUG - Displaying available plugins
+2024-10-25 19:01:45 - WARNING - File not found: data\non_existing.csv
+2024-10-25 19:02:17 - INFO - User exited the application.

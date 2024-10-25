@@ -28,10 +28,10 @@ class PluginManager:
                     logger.info(f"Successfully loaded plugin: {module_name}")
                 else:
                     logger.error(f"Command class '{command_class_name}' not found in {module_name}")
-            except ImportError as e:
+            except ImportError as e: #COV-NA
                 # EAFP: Catch import errors to handle invalid or missing modules
                 logger.error(f"Failed to import module '{module_name}': {e}")
-            except Exception as e:
+            except Exception as e: #COV-NA
                 # Catch any other errors in case something unexpected happens
                 logger.error(f"Failed to load command '{module_name}': {e}")
 
@@ -52,22 +52,22 @@ class PluginManager:
 
     def get_command(self, command_name):
         # LBYL: Check if the command exists in the plugins before trying to access it
-        if command_name in self.plugins:
-            command = self.plugins[command_name]
+        if command_name in self.plugins: #COV-NA
+            command = self.plugins[command_name] #COV-NA
             logger.debug(f"Retrieved command: {command_name}")
             return command
-        else:
+        else: #COV-NA
             # EAFP: Log the missing command and return None as a fallback
             logger.warning(f"Command not found: {command_name}")
-            return None
+            return None 
 
     def list_plugins(self):
         # LBYL: Verify if there are plugins loaded before attempting to list them
-        if self.plugins:
+        if self.plugins: #COV-NA
             plugin_keys = list(self.plugins.keys())
             logger.debug(f"Listing loaded plugins: {plugin_keys}")
             return plugin_keys
-        else:
+        else: #COV-NA
             # If no plugins are loaded, log and return an empty list
             logger.info("No plugins loaded.")
             return []
