@@ -1,103 +1,157 @@
-"""
-Unit tests for the Calculator application.
-
-These tests cover the basic functionalities of the Calculator class, including
-addition, subtraction, multiplication, division, and history tracking. Each test utilizes fixtures to set
-up a testing environment with a temporary history file and generate fake data.
-"""
-
+""" Calculator Tests """
 import os
 from decimal import Decimal
+from unittest.mock import MagicMock
 import pytest
 from calculator import Calculator
-from calculator.plugins import PluginManager
-from calculator.plugins.add import AddCommand
-from calculator.plugins.subtract import SubtractCommand
-from calculator.plugins.divide import DivideCommand
-from calculator.plugins.multiply import MultiplyCommand
+from calculator.factory import CommandFactory
 
+# Fixtures for calculator
 @pytest.fixture
 def calculator():
-    """Fixture to create a Calculator instance with a valid history file."""
-    history_file = os.path.join('data', 'test_history.csv')  # Provide a test history file
-
-    # Create the data directory if it does not exist
+    """Fixture to create a Calculator instance with a valid test history file."""
+    history_file = os.path.join('data', 'test_history.csv')
     os.makedirs('data', exist_ok=True)
 
-    # Create an empty history file for testing purposes if it doesn't exist
-    if not os.path.exists(history_file):
-        with open(history_file, 'w', encoding='utf-8'):
-            pass  # Create the file
+    # Create an empty test history file
+    with open(history_file, 'w', encoding='utf-8'):
+        pass
 
     calc = Calculator(history_file=history_file)
+
+    # Mock the methods of the calculator instance
+    calc.add_to_history = MagicMock()
+    calc.save_as_new_file = MagicMock()
+    calc.clear_history = MagicMock()
+    calc.delete_last_calculation = MagicMock()
+    calc.show_history = MagicMock()
+    calc.load_history = MagicMock()
+
     yield calc
-    # Cleanup the test history file after the test
-    os.remove(history_file)
 
+    # Cleanup the test history file
+    if os.path.exists(history_file):
+        os.remove(history_file)
 
-@pytest.fixture
-def plugin_manager(calculator):
-    """Fixture to create a PluginManager instance and load plugins."""
-    manager = PluginManager(calculator)
-    manager.load_plugins()
-    return manager
-
+# Test cases
 def test_add(calculator, fake_data):
     """Test the add function using the AddCommand with fake data."""
-    add_command = AddCommand(calculator)
+    add_command = CommandFactory.create_command("add", calculator)
 
     for record in fake_data:
         if record['operation'] == 'add':
             result = add_command.execute(Decimal(record['operand1']), Decimal(record['operand2']))
             expected_result = Decimal(record['operand1']) + Decimal(record['operand2'])
-            assert result == expected_result, f"Expected {expected_result} but got {result}"  # Validate the result
+            assert result == expected_result, f"Expected {expected_result} but got {result}"
 
 def test_subtract(calculator, fake_data):
     """Test the subtract function using the SubtractCommand with fake data."""
-    subtract_command = SubtractCommand(calculator)
+    subtract_command = CommandFactory.create_command("subtract", calculator)
 
     for record in fake_data:
         if record['operation'] == 'subtract':
             result = subtract_command.execute(Decimal(record['operand1']), Decimal(record['operand2']))
             expected_result = Decimal(record['operand1']) - Decimal(record['operand2'])
-            assert result == expected_result, f"Expected {expected_result} but got {result}"  # Validate the result
+            assert result == expected_result, f"Expected {expected_result} but got {result}"
 
 def test_multiply(calculator, fake_data):
     """Test multiplication using the MultiplyCommand with fake data."""
-    multiply_command = MultiplyCommand(calculator)
+    multiply_command = CommandFactory.create_command("multiply", calculator)
 
     for record in fake_data:
         if record['operation'] == 'multiply':
             result = multiply_command.execute(Decimal(record['operand1']), Decimal(record['operand2']))
             expected_result = Decimal(record['operand1']) * Decimal(record['operand2'])
-            assert result == expected_result, f"Expected {expected_result} but got {result}"  # Validate the result
+            assert result == expected_result, f"Expected {expected_result} but got {result}"
 
 def test_divide(calculator, fake_data):
     """Test division using the DivideCommand with fake data."""
-    divide_command = DivideCommand(calculator)
+    divide_command = CommandFactory.create_command("divide", calculator)
 
     for record in fake_data:
         if record['operation'] == 'divide' and Decimal(record['operand2']) != 0:
             result = divide_command.execute(Decimal(record['operand1']), Decimal(record['operand2']))
             expected_result = Decimal(record['operand1']) / Decimal(record['operand2'])
-            # Compare with a tolerance for floating point precision issues
             assert abs(result - expected_result) < Decimal('0.0001'), f"Expected {expected_result} but got {result}"
 
-def test_history(calculator, fake_data):
-    """Test that calculation history stores calculations correctly using fake data."""
-    add_command = AddCommand(calculator)
+@pytest.fixture
+def history_command(calculator):
+    """Fixture to create a HistoryCommand instance."""
+    return CommandFactory.create_command("history", calculator)
 
-    for record in fake_data:
-        if record['operation'] == 'add':
-            add_command.execute(Decimal(record['operand1']), Decimal(record['operand2']))  # Perform addition
+# Test cases for HistoryCommand
+def test_history_command_help(history_command, capsys):
+    """Test the help command."""
+    history_command.execute("help")
+    captured = capsys.readouterr()
+    assert "Usage: history <subcommand> [<filename>]" in captured.out
 
-    history = calculator.get_history()  # Retrieve the calculation history
-    expected_history_length = sum(1 for record in fake_data if record['operation'] == 'add')
-    assert len(history) == expected_history_length, f"Expected history length {expected_history_length} but got {len(history)}"
+def test_history_load_file_exists(history_command):
+    """Test loading history from an existing file."""
+    mock_history_data = "operation,operands,result\nadd,[Decimal('5'), Decimal('3')],8\n"
+    filename = os.path.join('data', 'test_load.csv')
 
-    # Check results for only the 'add' operations
-    for record in fake_data:
-        if record['operation'] == 'add':
-            expected_result = Decimal(record['operand1']) + Decimal(record['operand2'])
-            actual_result = history.pop(0)['result']  # Use pop to ensure we get the correct entry
-            assert actual_result == expected_result, f"Expected {expected_result} but got {actual_result}"  # Check recorded result
+    # Create a mock history file
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(mock_history_data)
+
+    history_command.execute("load", filename)
+
+    # Verify that load_history was called with the correct filename
+    history_command.calculator.load_history.assert_called_once_with(filename)
+
+    # Clean up
+    os.remove(filename)
+
+def test_history_load_file_not_exists(history_command, capsys):
+    """Test loading history from a non-existing file."""
+    history_command.execute("load", "non_existing_file.csv")
+    captured = capsys.readouterr()
+    assert "History file 'data\\non_existing_file.csv' does not exist." in captured.out
+
+def test_history_save(history_command):
+    """Test saving history to a file."""
+    filename = os.path.join('data', 'test_save.csv')
+    history_command.execute("save", filename)
+    history_command.calculator.save_as_new_file.assert_called_once_with(filename)
+
+    # Clean up
+    if os.path.exists(filename):
+        os.remove(filename)
+
+def test_history_clear(history_command):
+    """Test clearing the history."""
+    history_command.execute("clear")
+    history_command.calculator.clear_history.assert_called_once()
+
+def test_history_delete(history_command):
+    """Test deleting the last calculation."""
+    history_command.execute("delete")
+    history_command.calculator.delete_last_calculation.assert_called_once()
+
+def test_history_show(history_command):
+    """Test showing the current history."""
+    history_command.execute("show")
+    history_command.calculator.show_history.assert_called_once()
+
+def test_history_show_with_filename(history_command):
+    """Test showing history from a specified file."""
+    mock_history_data = "operation,operands,result\nadd,[Decimal('5'), Decimal('3')],8\n"
+    filename = os.path.join('data', 'test_show.csv')
+
+    # Create a mock history file
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(mock_history_data)
+
+    history_command.execute("show", filename)
+    history_command.calculator.load_history.assert_called_once_with(filename)
+    history_command.calculator.show_history.assert_called_once()
+
+    # Clean up
+    os.remove(filename)
+
+def test_history_execute_invalid_subcommand(history_command, capsys):
+    """Test handling of an invalid subcommand."""
+    history_command.execute("invalid")
+    captured = capsys.readouterr()
+    assert "Invalid subcommand. Use load, save, clear, delete, or show." in captured.out
