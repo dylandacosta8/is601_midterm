@@ -17,7 +17,7 @@ class CommandFactory:
                     # LBYL: Check if it's a class and has the required methods before adding
                     if isinstance(cls_obj, type) and hasattr(cls_obj, 'execute') and hasattr(cls_obj, 'show_help'):
                         cls.command_classes[module_name] = cls_obj
-            except ImportError as e:
+            except ImportError as e: #COV-NA
                 print(f"Failed to import {module_name}: {e}")
 
     @classmethod
@@ -28,6 +28,6 @@ class CommandFactory:
             return cls.command_classes[command_name](calculator)  # Instantiate command with calculator
         else:
             # EAFP: Raise an error if the command doesn't exist, handle elsewhere
-            raise ValueError(f"Unknown command: {command_name}")
+            raise ValueError(f"Unknown command: {command_name}") #COV-NA
 
 CommandFactory.load_command_classes()

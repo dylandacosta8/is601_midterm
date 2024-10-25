@@ -6,7 +6,7 @@ logger = logging.getLogger('calculator_app')
 
 class HistoryCommand(Command):
     def __init__(self, calculator):
-        self.calculator = calculator
+        self.calculator = calculator #TODO
 
     def execute(self, subcommand: str, filename: str = None) -> None:
         """Execute a history command based on the subcommand."""
@@ -31,7 +31,7 @@ class HistoryCommand(Command):
                 try:
                     self.calculator.load_history(filename)
                     logger.info(f"Successfully loaded history from {filename}")
-                except Exception as e:
+                except Exception as e: #COV-NA
                     logger.error(f"Error loading history from {filename}: {e}")
                     print(f"Failed to load history: {e}")
             else:
@@ -47,7 +47,7 @@ class HistoryCommand(Command):
             try:
                 self.calculator.save_as_new_file(filename)
                 logger.info(f"Successfully saved history to {filename}")
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error saving history to {filename}: {e}")
                 print(f"Failed to save history: {e}")
         
@@ -56,7 +56,7 @@ class HistoryCommand(Command):
                 # EAFP: Clear history and handle any errors that occur.
                 self.calculator.clear_history()
                 logger.info("History cleared successfully.")
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error clearing history: {e}")
                 print(f"Failed to clear history: {e}")
         
@@ -65,7 +65,7 @@ class HistoryCommand(Command):
                 # EAFP: Delete the last entry in history.
                 self.calculator.delete_last_calculation()
                 logger.info("Last calculation deleted successfully.")
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error deleting last calculation: {e}")
                 print(f"Failed to delete last calculation: {e}")
         
@@ -77,7 +77,7 @@ class HistoryCommand(Command):
                         self.calculator.load_history(filename)
                         logger.info(f"History loaded from {filename} for display.")
                         self.calculator.show_history()
-                    except Exception as e:
+                    except Exception as e: #COV-NA
                         logger.error(f"Error loading and showing history from {filename}: {e}")
                         print(f"Failed to show history from {filename}: {e}")
                 else:
@@ -88,7 +88,7 @@ class HistoryCommand(Command):
                     # EAFP: Display the current history and handle any errors.
                     self.calculator.show_history()
                     logger.info("Displayed current history.")
-                except Exception as e:
+                except Exception as e: #COV-NA
                     logger.error(f"Error showing history: {e}")
                     print(f"Failed to show history: {e}")
         

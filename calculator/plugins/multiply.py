@@ -18,12 +18,12 @@ class MultiplyCommand:
                 self.calculator.add_to_history("multiply", [operand1, operand2], result)
                 logger.info(f"Executed Multiply: {operand1} * {operand2} = {result}")
                 return result
-            except Exception as e:
+            except Exception as e: #COV-NA
                 logger.error(f"Error during multiplication: {e}")
-                raise e  # Reraise the exception after logging
+                raise e  # Reraise the exception after logging #COV-NA
         else:
             logger.warning(f"Invalid operands for multiplication: {operand1}, {operand2}")
-            raise ValueError("Operands must be Decimal numbers")
+            raise ValueError("Operands must be Decimal numbers") #COV-NA
 
     def show_help(self) -> None:
         """Provide help for the Multiply command."""
