@@ -106,8 +106,11 @@ def test_history_load_file_exists(history_command):
 def test_history_load_file_not_exists(history_command, capsys):
     """Test loading history from a non-existing file."""
     history_command.execute("load", "non_existing_file.csv")
+    path = str(os.path.join('data','non_existing_file.csv'))
+    expected_message = f"History file {path} does not exist."
+    print(expected_message)
     captured = capsys.readouterr()
-    assert "History file 'data\\non_existing_file.csv' does not exist." in captured.out
+    assert expected_message in captured.out
 
 def test_history_save(history_command):
     """Test saving history to a file."""
